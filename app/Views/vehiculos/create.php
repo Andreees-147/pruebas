@@ -17,13 +17,13 @@
         <?= csrf_field() ?>
 
         <label for="placa">Placa</label>
-        <input type="text" id="placa" name="placa" value="<?= esc(old('placa')) ?>" maxlength="8" pattern="[A-Za-z]{3}-[0-9]{4}" placeholder="ABC-1234" title="Formato: 3 letras, guion y 4 números (ABC-1234)" required>
+        <input type="text" placeholder="ABC-1234" id="placa" name="placa" value="<?= esc(old('placa')) ?>" maxlength="8" pattern="[A-Za-z]{3}-[0-9]{4}" title="Formato: 3 letras, guion y 4 números (ABC-1234)" required>
 
         <label for="marca">Marca</label>
-        <input type="text" id="marca" name="marca" value="<?= esc(old('marca')) ?>" maxlength="50" required>
+        <input type="text" placeholder="Toyota" id="marca" name="marca" value="<?= esc(old('marca')) ?>" maxlength="50" required>
 
         <label for="modelo">Modelo</label>
-        <input type="text" id="modelo" name="modelo" value="<?= esc(old('modelo')) ?>" maxlength="50" required>
+        <input type="text" placeholder="Camry" id="modelo" name="modelo" value="<?= esc(old('modelo')) ?>" maxlength="50" required>
 
         <div class="acciones">
             <button type="submit" class="btn">Guardar</button>

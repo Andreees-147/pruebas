@@ -15,22 +15,17 @@ class VehiculosController extends Controller
         $this->vehiculosModel = new VehiculosModel();
     }
 
-    // Reglas de validación (sirven para crear y para editar)
-    private function reglas($id = null): array
+    // Reglas de validación del formulario de crear
+    private function reglas(): array
     {
-        // Al editar, la placa puede repetirse solo consigo misma
-        $unica = $id === null
-            ? 'is_unique[vehiculos.placa]'
-            : 'is_unique[vehiculos.placa,id_vehiculo,' . (int) $id . ']';
-
         return [
             'placa' => [
-                'rules'  => 'required|exact_length[8]|' . $unica . '|regex_match[/^[A-Za-z]{3}-[0-9]{4}$/]',
+                'rules'  => 'required|exact_length[8]|is_unique[vehiculos.placa]|regex_match[/^[A-Za-z]{3}-[0-9]{4}$/]',
                 'errors' => [
-                    'required'    => 'La placa es obligatoria.',
+                    'required'     => 'La placa es obligatoria.',
                     'exact_length' => 'La placa debe tener 8 caracteres (ejemplo: ABC-1234).',
-                    'regex_match' => 'La placa debe tener el formato ABC-1234 (3 letras, guion y 4 números).',
-                    'is_unique'   => 'Ya existe un vehículo con esa placa.',
+                    'regex_match'  => 'La placa debe tener el formato ABC-1234 (3 letras, guion y 4 números).',
+                    'is_unique'    => 'Ya existe un vehículo con esa placa.',
                 ],
             ],
             'marca' => [
@@ -97,39 +92,6 @@ class VehiculosController extends Controller
 
         return redirect()->to(base_url('vehiculos'))
             ->with('success', 'Vehículo registrado correctamente.');
-    }
-
-    // Muestra el formulario de EDITAR con los datos actuales
-    public function edit($id)
-    {
-        $vehiculo = $this->vehiculosModel->find($id);
-
-        if (! $vehiculo) {
-            return redirect()->to(base_url('vehiculos'))
-                ->with('errors', ['El vehículo no existe.']);
-        }
-
-        return view('vehiculos/edit', ['vehiculo' => $vehiculo]);
-    }
-
-    // GUARDAR los cambios de un vehículo
-    public function update($id)
-    {
-        if (! $this->vehiculosModel->find($id)) {
-            return redirect()->to(base_url('vehiculos'))
-                ->with('errors', ['El vehículo no existe.']);
-        }
-
-        if (! $this->validate($this->reglas($id))) {
-            return redirect()->back()
-                ->withInput()
-                ->with('errors', $this->validator->getErrors());
-        }
-
-        $this->vehiculosModel->update($id, $this->datosLimpios());
-
-        return redirect()->to(base_url('vehiculos'))
-            ->with('success', 'Vehículo actualizado correctamente.');
     }
 
     // ELIMINAR

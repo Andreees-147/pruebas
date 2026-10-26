@@ -15,9 +15,8 @@ $routes->post('pedido/delete/(:num)', 'PedidoController::delete/$1');
 
 $routes->get('vehiculos', 'VehiculosController::index');
 $routes->get('vehiculos/create', 'VehiculosController::create');
+$routes->post('vehiculos/store', 'VehiculosController::store');
 $routes->post('vehiculos/delete/(:num)', 'VehiculosController::delete/$1');
-$routes->get('vehiculos/edit/(:num)', 'VehiculosController::edit/$1');
-$routes->post('vehiculos/update/(:num)', 'VehiculosController::update/$1');
 
 $routes->get('proveedores', 'ProveedoresController::index');
 $routes->get('proveedores/create', 'ProveedoresController::create');
